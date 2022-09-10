@@ -1,0 +1,1009 @@
+/* START HTML STYLE */
+
+body{ 
+  margin:0px; }
+
+:root{
+  --main-radius:5px;
+  --main-padding:5px;
+  --title-font-size :15px;
+  --select-font-size :15px;
+  --button-font-size:13px;
+  --legend-font-size:12px;
+  --width-legend:30px;
+  --height-legend:16px;
+  --width-legend-stroke:25px;
+  --height-legend-stroke:13px;
+  --width-legend-parallel:25px;
+  --width-tutorial:1312px;
+  --height-tutorial:738px;
+}
+
+/*Tutorial For New Users*/
+
+#tutorial {
+  display: none;
+  width:var(--width-tutorial);
+  height: var(--height-tutorial);
+  background-size: contain;
+  background-size: 100% 100%;
+  background-image: url("./media/initial.png");
+  
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  margin: auto;
+  z-index: 4;
+  border-radius:var(--main-radius);
+  box-shadow: 0px 1px 5px -1px rgb(73, 73, 73);
+
+}
+
+#close-button{
+  width: 100px;
+  height: 20px;
+  float:right;
+  margin-top: 8px;
+  border-top-right-radius:3px ;
+  border-bottom-right-radius:3px ;
+  background-color:#b01a1a;
+  color: white;
+  border: none;
+}
+
+#close-button:hover{
+  filter: brightness(110%);
+}
+
+#close-button:active{
+  filter: brightness(80%);
+}
+
+
+/* CONTAINER */
+
+.container{
+  background-color: rgb(255, 255, 255);
+  display: grid;
+  height: 100vh;
+  overflow: hidden;
+  grid-template-columns: 1fr 1fr 0.6fr 1.4fr;
+  grid-template-rows: 0.2fr 1.9fr 1.9fr;
+  grid-template-areas: 
+  "nav nav nav nav"
+  "pca-container pca-container geneview geneview"
+  "dce dce table genefilter";
+  grid-gap : 0.8rem;
+  font-family: "Inter",sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: var(--legend-font-size);
+  color: #333;
+  text-align: center;
+}
+
+#nav-container{
+  background-color: rgba(	236, 236, 236, .1);
+  grid-area: nav;
+  box-shadow: 0 5px 5px -5px #333;
+  height: 70px;
+}
+
+#title{
+  float:left;
+}
+
+#dcelogo{
+  max-width:100%;
+  max-height:100%;
+  border-radius: 50%;
+  float:left;
+  margin-left: 20px;
+}
+
+#sapienzalogo{
+  max-width:100%;
+  max-height:80%;
+  float:left;
+  margin-top: 8px;
+}
+
+#dcetitle{
+  max-width:100%;
+  max-height:80%;
+  float:left;
+  margin-top: 8px;
+}
+
+#nav-button{
+  max-width:100%;
+  max-height:80%;
+  float:left;
+  margin-top: 8px;
+  border-radius:var(--main-radius) ;
+  background-color:#59b5c9;
+  color: white;
+  border: none;
+}
+
+#nav-button:hover{
+  filter: brightness(110%);
+}
+
+#nav-button:active{
+  filter: brightness(80%);
+}
+
+/* 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+----------------- PCA PRINCIPAL COMP.AN. ----------------- 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+*/
+
+#pca-container{
+  grid-area: pca-container;
+  border-radius: var(--main-radius);
+  height:400px;
+  display: grid;
+  grid-template-columns: 7fr 1fr ;
+  grid-template-rows: 1fr 11fr;
+  grid-template-areas: 
+  "title-pca title-pca"
+  "pca legend-pca";
+  box-shadow: 0px 1px 5px -1px rgb(73, 73, 73);
+}
+#pca{
+  background-color: #ffffff;
+  grid-area: pca;
+  border-bottom-left-radius:var(--main-radius) ;
+}
+#title-pca{
+  border-top-right-radius:var(--main-radius) ;
+  border-top-left-radius:var(--main-radius) ;
+  background-color: rgba(	236, 236, 236, .12);
+  grid-area: title-pca;
+  color:#59b5c9;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 5px -5px #333;
+  z-index:2;
+  display:grid;
+  grid-template-columns: 1fr 5fr 2fr ;
+  grid-template-rows: 1fr;
+  grid-template-areas: 
+  "pca-id pca-question top-genes";
+  font-size: var(--title-font-size);
+}
+
+#pca-id{
+
+    grid-area: pca-id;
+    color: #ff2a4a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+
+}
+
+#pca-title-question{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: pca-question;
+}
+
+#top-genes{
+  font-size: var(--select-font-size);
+  text-transform: initial;
+  color: #ff2a4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: top-genes;
+  height: 100%;
+  width: 100%;
+}
+
+#legend-pca{
+  background-color: #f7f7f7;
+  grid-area: legend-pca;
+  border-bottom-right-radius:var(--main-radius) ;
+  text-align: left;
+
+}
+
+#legend-pca .legend-title-pca {
+  margin-left: 5px;
+  color:rgb(136, 135, 135);
+  margin-bottom: 20px;
+  margin-top:20px;
+  }
+
+#legend-pca .legend-scale-pca ul {
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 0;
+  list-style: none;
+  }
+
+#legend-pca .legend-scale-pca ul li {
+  font-size: 80%;
+  list-style: none;
+  margin-left: 0;
+  line-height: 18px;
+  margin-bottom: 10px;
+  color:rgb(136, 135, 135);
+  text-transform: capitalize;
+  
+  }
+
+#legend-pca ul.legend-labels-pca li span {
+  display: block;
+  float: left;
+  height: var(--height-legend);
+  width: var(--width-legend);
+  margin-right: 5px;
+  margin-left: 5px;
+  border-radius: 10px;
+  
+  }
+
+  #scroll{
+    width: 20px;
+    transform: translateY(20%);
+    margin-left: 10px;
+    padding-right: 10px;
+  }
+
+/* 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+----------------- SCATTER PLOT GENE VIEW ----------------- 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+*/
+
+#scatter-container{
+  height:400px;
+  grid-area: geneview;
+  border-radius: var(--main-radius);
+  display: grid;
+  grid-template-columns: 7fr 1fr ;
+  grid-template-rows: 1fr 11fr;
+  grid-template-areas: 
+  "title-scatter title-scatter"
+  "genescatter legend-scatter";
+  box-shadow: 0px 1px 5px -1px rgb(73, 73, 73);
+}
+
+#genescatter{
+  background-color: #ffffff;
+  grid-area: genescatter;
+  border-radius: var(--main-radius);
+}
+
+#title-scatter{
+  border-top-right-radius:var(--main-radius) ;
+  border-top-left-radius:var(--main-radius) ;
+  background-color: rgba(	236, 236, 236, .1);
+  grid-area: title-scatter;
+  font-size: var(--title-font-size);
+  color:#59b5c9;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 5px -5px #333;
+  z-index:2;
+  display:grid;
+  grid-template-columns: 1fr 7fr  ;
+  grid-template-rows: 1fr;
+  grid-template-areas: 
+  "genescatter-id genescatter-t";
+}
+
+#genescatter-id{
+  grid-area: genescatter-id;
+  color: #ff2a4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+#genescatter-t{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: genescatter-t;
+}
+
+#legend-scatter{
+  background-color: #f7f7f7;
+  grid-area: legend-scatter;
+  border-bottom-right-radius:var(--main-radius) ;
+  text-align: left;
+
+}
+
+#legend-scatter .legend-title-scatter {
+  margin-left: 5px;
+  color:rgb(136, 135, 135);
+  margin-bottom: 20px;
+  margin-top:20px;
+  }
+
+#legend-scatter .legend-scale-scatter ul {
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 0;
+  list-style: none;
+  }
+
+#legend-scatter .legend-scale-scatter ul li {
+  font-size: 80%;
+  list-style: none;
+  margin-left: 0;
+  line-height: 18px;
+  margin-bottom: 10px;
+  color:rgb(136, 135, 135);
+  text-transform: capitalize;
+  
+  }
+
+#legend-scatter ul.legend-labels-scatter li #scater-span {
+  display: block;
+  float: left;
+  height: var(--height-legend);
+  width: var(--width-legend);
+  margin-right: 5px;
+  margin-left: 5px;
+  border-radius: 10px;
+  
+  }
+
+#legend-scatter-selection-scatter{
+  display: block;
+  float: left;
+  height: var(--height-legend-stroke);
+  width: var(--width-legend-stroke);
+  margin-right: 5px;
+  margin-left: 5px;
+  border-radius: 10px;
+  border: solid;
+}
+
+
+/* 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+----------------- DCE DIFF. CO. EXPRESS. ----------------- 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+*/
+
+#dce-container{
+  grid-area: dce;
+  height:400px;
+  border-radius: var(--main-radius);
+  display: grid;
+  grid-template-columns: 7fr 1fr ;
+  grid-template-rows: 1fr 11fr;
+  grid-template-areas: 
+  "title-dce title-dce"
+  "dcecomponent legend-dce";
+  box-shadow: 0px 1px 5px -1px rgb(73, 73, 73);
+}
+
+#dce{
+  background-color: #ffffff;
+  grid-area: dcecomponent;
+}
+
+#title-dce{
+  border-top-right-radius:var(--main-radius) ;
+  border-top-left-radius:var(--main-radius) ;
+  background-color: rgba(	236, 236, 236, .1);
+  grid-area: title-dce;
+  font-size: var(--title-font-size);
+  color:#59b5c9;
+  box-shadow: 0 5px 5px -5px #333;
+  z-index:2;
+  display:grid;
+  grid-template-columns: 1fr 5fr 0.5fr 0.5fr 1fr ;
+  grid-template-rows: 1fr;
+  grid-template-areas: 
+  "dce-id dce-question  dce-network dce-gene dce-button ";
+
+}
+#dce-id{
+  grid-area: dce-id;
+  color: #ff2a4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+#dce-title-question{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: dce-question;
+}
+
+#dcebutton{
+  border-top-right-radius:var(--main-radius) ;
+  grid-area: dce-button;
+  color:rgb(255, 255, 255);
+  background-color:#ed324e;
+  border:none;
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 5px 5px -5px #333;
+  float: right;
+  font-size: var(--button-font-size);
+}
+
+#dcegene{
+  grid-area: dce-gene;
+  color:rgb(255, 255, 255);
+  background-color:#59b5c9;
+  border:none;
+  height: 100%;
+  width: 100%;
+
+  float: right;
+  font-size: var(--button-font-size);
+}
+
+#dcenetwork{
+  grid-area: dce-network;
+  color:rgb(255, 255, 255);
+  background-color:#0d1d20;
+  border:none;
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 5px 5px -5px #333;
+  float: right;
+  font-size: var(--button-font-size);
+}
+
+#dcegene:hover {
+  background-color:#b9cace;
+  transition: 0.4s;
+}
+
+#dcegene:active {
+  background-color:#003845;
+}
+
+#dcenetwork:hover {
+  background-color:#b9cace;
+  transition: 0.4s;
+}
+
+#dcenetwork:active {
+  background-color:#003845;
+}
+
+#dcebutton:hover {
+  background-color:rgb(255, 150, 150);
+  transition: 0.4s;
+}
+
+#dcebutton:active {
+  background-color:rgb(43, 0, 0);
+}
+
+
+#legend-dce{
+  background-color: #f7f7f7;
+  grid-area: legend-dce;
+  border-bottom-right-radius:var(--main-radius) ;
+  text-align: left;
+
+}
+
+#legend-dce .legend-title-dce {
+  margin-left: 5px;
+  color:rgb(136, 135, 135);
+  margin-bottom: 20px;
+  margin-top:20px;
+  }
+
+#legend-dce .legend-scale-dce ul {
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 0;
+  list-style: none;
+  }
+
+#legend-dce .legend-scale-dce ul li {
+  font-size: 80%;
+  list-style: none;
+  margin-left: 0;
+  line-height: 18px;
+  margin-bottom: 10px;
+  color:rgb(136, 135, 135);
+  text-transform: capitalize;
+  
+  }
+
+#legend-dce ul.legend-labels-dce li span {
+  display: block;
+  float: left;
+  height: var(--height-legend);
+  width: var(--width-legend);
+  margin-right: 5px;
+  margin-left: 5px;
+  border-radius: 10px;
+  
+  }
+
+
+
+/* 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+-----------------  PARALLEL COORDINATES  ----------------- 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+*/
+
+#parallel-container{
+  height:400px;
+  grid-area: genefilter;
+  border-radius: var(--main-radius);
+  display: grid;
+  grid-template-columns: 9fr 2fr ;
+  grid-template-rows: 1fr 11fr;
+  grid-template-areas: 
+  "title-parallel title-parallel"
+  "parallel legend-parallel";
+  box-shadow: 0px 1px 5px -1px rgb(73, 73, 73);
+}
+
+#parallel{
+  background-color: #ffffff;
+  grid-area: parallel;
+  width: 100%;
+}
+
+
+#title-parallel{
+  border-top-right-radius:var(--main-radius) ;
+  border-top-left-radius:var(--main-radius) ;
+  background-color: rgba(	236, 236, 236, .1)ec;
+  grid-area: title-parallel;
+  font-size: var(--title-font-size);
+  color:#59b5c9;
+
+  box-shadow: 0 5px 5px -5px #333;
+  z-index:2;
+  display:grid;
+  grid-template-columns: 1fr 8fr 2fr ;
+  grid-template-rows: 1fr;
+  grid-template-areas: 
+  "parallel-id parallel-t parallel-button";
+}
+
+#parallelReset{
+  border-top-right-radius:var(--main-radius) ;
+  grid-area: parallel-button;
+  color:rgb(255, 255, 255);
+  background-color:#ed324e;
+  border:none;
+  height: 100%;
+  width: 100%;
+  box-shadow: 0 5px 5px -5px #333;
+  float: right;
+  font-size: var(--button-font-size);
+}
+
+#parallelReset:hover {
+  background-color:#f9a6b2;
+  transition: 0.4s;
+}
+
+#parallelReset:active {
+  background-color:#721724;
+}
+
+#parallel-id{
+  grid-area: parallel-id;
+  color: #ff2a4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+#parallel-t{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: parallel-t;
+}
+
+
+#legend-parallel{
+  background-color: #f7f7f7;
+  grid-area: legend-parallel;
+  border-bottom-right-radius:var(--main-radius) ;
+  text-align: left;
+  width: 100%;
+
+}
+
+#legend-parallel .legend-title-parallel {
+  margin-left: 5px;
+  color:rgb(136, 135, 135);
+  margin-bottom: 20px;
+  margin-top:20px;
+  }
+
+#legend-parallel .legend-scale-parallel ul {
+  margin: 0;
+  margin-bottom: 5px;
+  padding: 0;
+  list-style: none;
+  }
+
+#legend-parallel .legend-scale-parallel ul li {
+  font-size: 80%;
+  list-style: none;
+  margin-left: 0;
+  line-height: 18px;
+  margin-bottom: 10px;
+  color:rgb(136, 135, 135);
+  text-transform: capitalize;
+  
+  }
+
+#legend-parallel ul.legend-labels-parallel li span {
+  display: block;
+  float: left;
+  height: 2px;
+  width: var(--width-legend-parallel);
+  margin-right: 5px;
+  margin-left: 5px;
+  border-radius: 10px;
+  transform: translateY(400%);
+  
+  }
+
+/* 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+-----------------         TABELLA        ----------------- 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+*/
+
+#tabella-container{
+  grid-area: table;
+  border-radius: var(--main-radius);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 0.5fr 1fr 10fr;
+  grid-template-areas: 
+  "title-tabella"
+  "tabella-arity"
+  "tabella-titles"
+  "tabella";
+  box-shadow: 0px 1px 5px -1px rgb(73, 73, 73);
+  height:400px;
+}
+
+#tabella-arity{
+  grid-area: tabella-arity;
+  display : flex;
+  justify-content: center;
+  margin-top: 2px;
+  box-shadow: 0 2px 2px -2px #333;
+  z-index: 1;
+}
+#tabella-titles{
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  grid-area: tabella-titles;
+  text-overflow: ellipsis;
+}
+
+#tabella{
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  grid-area: tabella;
+  text-overflow: ellipsis;
+  overflow: scroll;
+  box-shadow : 0 -5px 5px -5px #333;
+}
+
+#title-tabella{
+  border-top-right-radius:var(--main-radius) ;
+  border-top-left-radius:var(--main-radius) ;
+  background-color: rgba(	236, 236, 236, .1);
+  grid-area: title-tabella;
+  font-size: var(--title-font-size);
+  color:#59b5c9;
+  display:grid;
+  grid-template-columns: 2fr 12fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: 
+  "tabella-id tabella-t";
+  box-shadow: 0 5px 5px -5px #333;
+  z-index:2;
+}
+#tabella-id{
+  grid-area: tabella-id;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+#tabella-t{
+  grid-area: tabella-t;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+/* 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+-----------------         ToolTip        ----------------- 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+*/
+
+.avatar {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background-image: url("./media/favpng_clip-art.png");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: block;
+}
+
+.avatar::before,
+.avatar::after{
+  --scale :0;
+  --tooltip-color:rgba(255, 130, 130, 0.9);
+  --arrow-size:10px;
+
+  width: 300px;
+  position:absolute;
+  top :-.25rem;
+  left:50%;
+  transform:translateX(+0%) translateY(50%) scale(var(--scale));
+  transition:150ms transform;
+  transform-origin: top left;
+}
+
+.avatar::before{
+  content: attr(data-tooltip);
+  font-size: 10px;
+  text-transform:initial;
+  color: white;
+  border-radius: .3rem;
+  text-align: center;
+  padding:.5rem;
+  background: var(--tooltip-color);
+}
+
+.avatar:hover::before,
+.avatar:hover::after{
+  --scale :1;
+}
+
+/* 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+-----------------          MEDIA         ----------------- 
+----------------- ---------------------- ----------------- 
+----------------- ---------------------- ----------------- 
+*/
+@media all and (max-width: 1920px) {  body  {   
+  
+  overflow: hidden  } }
+
+@media all and (max-width: 1700px) {  body  {   
+  
+  --title-font-size :15px;
+  --select-font-size :15px;
+  --button-font-size:13px;
+  --legend-font-size:11px; 
+  --width-legend:29px;
+  --height-legend:15px;
+  --width-legend-stroke:24px;
+  --height-legend-stroke:12px;
+  --width-legend-parallel:24px;  } }
+
+@media all and (max-width: 1570px) {  body  {   
+  
+      --title-font-size :15px;
+      --select-font-size :12px;
+      --button-font-size:13px;
+      --legend-font-size:11px; 
+      --width-legend:29px;
+      --height-legend:15px;
+      --width-legend-stroke:24px;
+      --height-legend-stroke:12px;  
+      --width-legend-parallel:24px;
+      --width-tutorial:1152px;
+      --height-tutorial:648px;} }
+
+@media all and (max-width:1400px){
+  .container{
+      grid-template-columns: 1fr;
+      grid-template-rows: 0.4fr 1.12fr 1.12fr 1.12fr 1.12fr 1.12fr;
+      grid-template-areas: 
+      "nav"
+      "pca-container"
+      "geneview"
+      "genefilter"
+      "table"
+      "dce";
+      grid-gap : 0.8rem;
+      overflow: visible;
+  }
+  body {  
+  --title-font-size :15px;
+      --select-font-size :15px;
+      --button-font-size:13px;
+      --legend-font-size:13px; 
+      --width-legend:40px;
+      --height-legend:20px;
+      --width-legend-stroke:34px;
+      --height-legend-stroke:15px;
+      --width-legend-parallel:35px;
+      --width-tutorial:928px;
+      --height-tutorial:522px;
+      overflow: visible;
+  }
+
+}
+
+@media all and (max-width: 1000px) {  body  {   
+  
+  --title-font-size :15px;
+  --select-font-size :12px;
+  --button-font-size:13px;
+  --legend-font-size:11px; 
+  --width-legend:30px;
+  --height-legend:15px;
+  --width-legend-stroke:25px;
+  --height-legend-stroke:13px;  
+  --width-legend-parallel:25px;
+  --width-tutorial:608px;
+  --height-tutorial:342px;} }
+
+
+@media all and (max-width: 700px) {  body  {   
+  
+    --title-font-size :10px;
+    --select-font-size :7px;
+    --button-font-size:7px;
+    --legend-font-size:11px; 
+    --width-legend:20px;
+    --height-legend:15px;
+    --width-legend-stroke:10px;
+    --height-legend-stroke:8px;  
+    --width-legend-parallel:15px;
+    --width-tutorial:30em;
+    --height-tutorial:15em;} }
+
+
+
+
+
+
+/* END HTML STYLE */
+
+.tooltip {
+    position: absolute;
+    font-size: 12px;
+    width:  auto;
+    height: auto;
+    pointer-events: none;
+    background-color: white;
+}
+
+.tooltipDce {
+  position: absolute;
+  font-size: 12px;
+  width:  auto;
+  height: auto;
+  pointer-events: none;
+  background-color: white;
+}
+
+.selected {
+    opacity: 1 !important;
+    stroke: black;
+    stroke-width: 1px;
+  }
+
+.intersected {
+    opacity: 1 !important;
+    stroke: red;
+    stroke-width: 2px;
+}
+
+
+
+
+
+
+
+
+/* PARALLEL COORDINATES */
+
+.background path {
+    fill: none;
+    stroke: #ddd;
+    shape-rendering: crispEdges;
+  }
+
+  .brush .extent {
+    fill-opacity: .3;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+  }
+  
+  .axis line,
+  .axis path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+  
+  .axis text {
+    fill:#3B3F4C;;
+    text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+  }
+  pre {
+    width: 100%;
+    height: 300px;
+    margin: 6px 12px;
+    tab-size: 40;
+    font-size: 10px;
+    overflow: auto;
+  }
+  .axisColor line{
+    stroke:#3B3F4C;
+  }
+  .axisColor path{
+    stroke: #3B3F4C;
+  }
+  
+  .axisColor text{
+    fill: #3B3F4C;
+  }
+
+
+  /*SELECT BOX*/
+.select{
+  border-radius: 10%;
+}
+ 
