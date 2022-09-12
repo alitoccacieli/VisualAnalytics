@@ -7,7 +7,7 @@ DCETool is a D3 based application for Differential Co-Expression Network Analysi
 1) Download the code 
 2) Extract zip (Should be named "VisualAnalysis-master")
 
-From Shell :
+MACOS Terminal :
 
 1) ``cd VisualAnalytics-master`` Folder extracted above (Jump if already in it)
 2) ``python3 -m venv venv`` Create Virtual Enviroment
