@@ -20,7 +20,7 @@ Then follow the ip suggested and use the tool !
 WINDOWS Terminal :
 
 1) ``cd VisualAnalytics-master``
-2) ``python3 -m venv /venv``
-3) ``. venv/bin/activate``
+2) ``python3 -m venv venv``
+3) ``venv\Scripts\activate.bat``
 4) ``pip install -r requirements.txt``
 5) ``python3 server.py``
