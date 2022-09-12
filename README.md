@@ -16,3 +16,11 @@ MACOS Terminal :
 5) ``python3 server.py`` (Run server on 127.0.0.1:5000)
 
 Then follow the ip suggested and use the tool !
+
+WINDOWS Terminal :
+
+1) ``cd VisualAnalytics-master``
+2) ``python3 -m venv /venv``
+3) ``. venv/bin/activate``
+4) ``pip install -r requirements.txt``
+5) ``python3 server.py``
