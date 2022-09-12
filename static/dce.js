@@ -10,10 +10,10 @@ function Open() {
 }
 
 //TOP GENES
-d3.json("http://0.0.0.0:5000/genes",function(error,f){
+d3.json("http://127.0.0.1:5000/genes",function(error,f){
   if (error) throw error;
 
-d3.json("http://0.0.0.0:5000/pca",function(error,pcad){
+d3.json("http://127.0.0.1:5000/pca",function(error,pcad){
     if (error) throw error;
     
 var pcaData = pcad.data;
@@ -840,7 +840,7 @@ d3.selection.prototype.moveToFront = function() {
 
           });
         }
-        request('POST', 'http://0.0.0.0:5000/postdce')
+        request('POST', 'http://127.0.0.1:5000/postdce')
           .then(function (e) {
               hdata = e.target.response;
               hdata = hdata.replace(/'/g, '"') //replacing all ' with 
