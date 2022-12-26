@@ -237,12 +237,12 @@ d3.selection.prototype.moveToFront = function() {
             var newX = d3.event.transform.rescaleX(xPCA);
             var newY = d3.event.transform.rescaleY(yPCA);
         
-            // update gli axis
+            // update axis
             xAxis.call(d3.axisBottom(newX))
 
             yAxis.call(d3.axisLeft(newY))
         
-            // update i punti
+            // update points
             scatter
             .selectAll("circle")
               .attr('cx', function(d) {return newX(d.x)})
@@ -355,14 +355,12 @@ d3.selection.prototype.moveToFront = function() {
         if((extentScatter === null))
         {
 
-          //SPERIMENTAL
           if (reset){
             PCList.forEach(d=>{
               d3.select('.circle'+d).classed('intersected' , false).raise() 
             })
             reset = false
           }
-          //SPERIMENTALEND
 
           else{
             PCList.forEach(d=>{
@@ -383,14 +381,12 @@ d3.selection.prototype.moveToFront = function() {
         }
 
         else if(extentScatter == undefined || (extentScatter[0][0] === extentScatter[1][0] && extentScatter[0][1] === extentScatter[1][1])){
-          //SPERIMENTAL
           if (reset){
             PCList.forEach(d=>{
               d3.select('.circle'+d).classed('intersected' , false).raise() 
             })
             reset = false;
           }
-          //SPERIMENTALEND
           else{
             PCList.forEach(d=>{
               d3.select('.circle'+d).classed('intersected' , true).raise() 
@@ -603,7 +599,7 @@ d3.selection.prototype.moveToFront = function() {
 
 
 
-      // brush per i parallel coordinates , per ogni axis   
+      // brush for the parallel coordinates , forEach axis   
       function brush (){
         parallelBrushList=[]
         var actives = [];
@@ -633,7 +629,7 @@ d3.selection.prototype.moveToFront = function() {
           else
           extentP = 0;
       
-          // When no selectors are active, tutti i dati sono visibili.
+          // When no selectors are active, all data is visible.
           isActive = (actives.length == 0 )? true:isActive;
 
           // Only render rows that are active across all selectors      
@@ -843,7 +839,7 @@ d3.selection.prototype.moveToFront = function() {
         request('POST', 'http://127.0.0.1:5000/postdce')
           .then(function (e) {
               hdata = e.target.response;
-              hdata = hdata.replace(/'/g, '"') //replacing all ' with 
+              hdata = hdata.replace(/'/g, '"') 
               if (hdata == "empty"){
                 network = '';
                 drawEmpty('empty')} 
@@ -888,7 +884,8 @@ d3.selection.prototype.moveToFront = function() {
 
   }
 
-}// chiudi redraw
+}// close the re-draw function
+  
     //BUTTONS
     var tops = ["500","400","300", "200", "100"];
 
@@ -920,128 +917,5 @@ d3.selection.prototype.moveToFront = function() {
 
 
 
-})// chiudi filter
-})// chiudi filter
-
-
-
-
-/*
-function drawHisto(hdata){
-        d3.selectAll("#dce svg").remove();
-        var dce = cont3
-          .append("svg")
-          .attr("width", props.widthDce + props.margin.left + props.margin.right)
-          .attr("height", props.heightDce + props.margin.top + props.margin.bottom + 30)
-          .append("g")
-            .attr("transform",
-                  "translate(" + props.margin.left + "," + props.margin.top + ")");
-
-        var xdce = d3.scaleBand()
-          .range([ 0, props.widthDce ])
-          .domain(hdata.map(function(d) { return d.gene; }))
-          .padding(0.2);
-
-        dce.append("g")
-          .attr("class", "axisColor")
-          .attr("transform", "translate(0," + props.heightDce + ")")
-          .call(d3.axisBottom(xdce))
-          .selectAll("text")
-            .attr("transform", "translate(-10,0)rotate(-45)")
-            .style("font-size","8px")
-            .style("text-anchor", "end");
-
-
-        var ydce = d3.scaleLinear()
-          .domain([0, d3.max(hdata, function (d) { return d.y })])
-          .range([ props.heightDce, 0]);
-
-        dce.append("g")
-          .attr("class", "axisColor")
-          .call(d3.axisLeft(ydce))
-          .append("text")
-          .attr("fill", "black")
-          .attr("transform","translate("+ props.margin.right/2 + "," + (-props.margin.top/2) +")")
-          .style("text-transform","initial")
-          .text("Degree");
-
-        const yAxisGrid = d3.axisLeft(ydce).tickSize(-props.widthDce).tickFormat('').ticks();
-
-        dce.append('g')
-          .attr('class', 'y axis-grid')
-          .call(yAxisGrid)
-          .attr('opacity','0.1');
-
-
-          var dceTTip = d3.select("#dce")
-            .append("span")
-            .style("opacity", 0)
-            .attr("class", "tooltipDce")
-            .style("background-color", "white")
-            .style("border", "solid")
-            .style("border-width", "1px")
-            .style("border-radius", "5px")
-            .style("padding", "10px")
-
-        var mouseoverbar = function(d) {
-          dceTTip.style("opacity", 1)
-          d3.select(this)
-            .transition()
-            .duration(1)
-            .attr("opacity", 1)
-            .attr("filter","brightness(85%)")
-        }
-
-        var mousemovebar = function(d) {
-          var dlist = d3.entries(d);
-          var gid = dlist[0]["value"];
-          var objid = Odata.filter(function(f,i){ return f.GeneEnsembl == gid })
-          dlist = d3.entries(objid);
-          gid = dlist[0]["value"]["geneId"]
-          var html  = "<span style='font-size:15px; color:" + prlcolor(d.regulation) + ";'>" + "ID : " +gid + "<br/>" +
-          "<span style='color:" + prlcolor(d.regulation) + ";'>"+"Degree : " + d.y + "</span><br/>";
-          dceTTip.html(html)
-              .style("left", (d3.event.pageX + 15) + "px")
-              .style("top", (d3.event.pageY - 28) + "px")
-          .transition()
-              .duration(50) 
-              .style("opacity", .9)
-        }
-
-      var mouseleavebar = function(d) {
-        dceTTip
-            .transition()
-            .duration(50)
-            .style("opacity", 0)
-
-        d3.select(this)
-            .transition()
-            .duration(1)
-            .attr("filter","brightness(100%)")
-        }
-
-        var dcebincolor = d3.scaleOrdinal()
-        .domain(["up","ns","down"])
-        .range(["#F8766D","#808080","#59b5c9"]);
-
-        // Bars
-        dce.selectAll("mybar")
-          .data(hdata)
-          .enter()
-          .append("rect")
-            .attr("x", function(d) { return xdce(d.gene); })
-            .attr("y", function(d) { return ydce(d.y); })
-            .attr("width", xdce.bandwidth())
-            .attr("height", function(d) { return props.heightDce - ydce(d.y); })
-            .attr("fill", function(d) {return dcebincolor(d.regulation)})
-            .attr("opacity", 1)
-            .style("margin", "10px")
-          .on("mouseover", mouseoverbar )
-          .on("mousemove", mousemovebar )
-          .on("mouseleave", mouseleavebar );
-          
-              
-        }
-        
-      // END DRAW BARPLOT
-*/
+})
+})
