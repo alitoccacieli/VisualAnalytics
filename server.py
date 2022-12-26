@@ -1,36 +1,37 @@
-from flask import Flask,request, render_template
-from flask_cors import CORS
-import json
-import numpy as np
-import pandas as pd
+#Import section
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
-from flask import request
-import ast
+from flask import Flask,request, render_template
+from flask_cors import CORS
 import networkx as nx
+import pandas as pd
+import numpy as np
+import json
+import ast
 
+
+#Read Data (TmmCount contains the counts matrix, GeniPAAD contains the gene table with statistical results)
 anova = pd.read_csv("./static/data/GeniPAAD.csv")
 df_raw = pd.read_csv("./static/data/TmmCount.csv")
 df_raw = df_raw.set_index('V1')
-df = df_raw.T
-features = df.columns.values
+df = df_raw.T #Transpose the matrix
+features = df.columns.values #get the values as features
 
-# Separating out the features
-x = df.loc[:, features].values
-# Standardizing the features
-x = StandardScaler().fit_transform(x)
-pca = PCA()
-principalComponents = pca.fit_transform(x)
+
+x = df.loc[:, features].values # Separating out the features
+x = StandardScaler().fit_transform(x) # Standardizing the features
+pca = PCA() #Initialize Principal Component Analysis
+principalComponents = pca.fit_transform(x) #fit
 per_var = np.round(pca.explained_variance_ratio_*100,decimals = 1)
-labels = ['PC' + str(x) for x in range(1,len(per_var)+1)]
+labels = ['PC' + str(x) for x in range(1,len(per_var)+1)] #label the Principal Components
 
-#Save the first 2 PC
+#Save the first 2 PC (Principal Components)
 save_pc1_lable = per_var[0]
 save_pc2_lable = per_var[1]
 save_pc1_lable = "PC1("+ str(save_pc1_lable) +"%)"
 save_pc2_lable = "PC2("+ str(save_pc2_lable) +"%)"
 
-loading_scores = pd.Series(pca.components_[0],index = features)
+loading_scores = pd.Series(pca.components_[0],index = features) #Get the scores
 sorted_loading_scores = loading_scores.abs().sort_values(ascending = False)
 top_genes = sorted_loading_scores[0:1200].index.values
 
@@ -49,11 +50,13 @@ classCond = [*hc,*paad]
 for i in range(len(ids)):
     a.append( {'id':ids[i],'x':x_axis[i],'y':y_axis[i],'class':classCond[i]} )
 
+# pca data to be displayed as x and y points for scatterplot
 pca_react = {'data' : a,'x':save_pc1_lable,'y':save_pc2_lable}
 
-# Top genes
+# Top genes to be displayed
 genes_react = {'data': list(loading_scores[top_genes].index)}
 
+#---------APP ROUTES----------#  
 app = Flask(__name__)
 CORS(app)
 
@@ -62,18 +65,21 @@ def home():
    return render_template('index.html')
 
    
-@app.route("/genes")
+@app.route("/genes") #return genes
 def genes():
     return genes_react
 
-@app.route("/pca")
+@app.route("/pca") #return pca results
 def pca():
     return pca_react
+#----------------------------#  
 
+# Function to compute Fisher z-Transformation that is used in the function --> differential_co_expression_analysis()
 def FisherTransform(x):
   return (1/2 * np.log((1+x)/(1-x)))
 
-def zscores(x,y):
+# Function to compute zscores that is used in the function --> differential_co_expression_analysis()
+def zscores(x,y): 
   v1 = 1/(34-3) 
   v2 = 1/(55-3) 
   zf = x - y 
@@ -81,6 +87,22 @@ def zscores(x,y):
   return (zf/np.sqrt(vf))
 
 vecz = np.vectorize(zscores)     
+
+#-----------------------------------------------------------------------#
+# ANALYTIC FUNCTION : This function will compute the differential co-expression analysis between two conditions (healthy and cancer)
+# The process that is needed to do so is described as follows:
+#   1. Pass, as input, a matrix containing data for two conditions
+#   2. Split the matrix into two matrices, of which the first will contain all genes with only samples from condition 1, and the second
+#      will contain all genes with only samples from condition 2 (Please NOTE that both matrices keep the same features [genes]).
+#   3. Compute the cor function (Correlation) to both matrices passing as method, the method 'pearson'.
+#   4. Set to zero the diagonals (not needed) to both matrices.
+#   5. Compute the Fisher z-Transformation to both matrices.
+#   6. Compute the z-score matrix using as input the two matrices.
+#   7. Decide for a threshold.
+#   8. Compute the Adjacency matrix.
+#   9. Use the adjacency matrix for :
+#       9.1. Compute the degree for each feature (gene) to be then exported by the euser in the client side. 
+#       9.2. Compute the network to be then exported by the user in the client side.
 
 def differential_co_expression_analysis(data):
 
@@ -128,7 +150,7 @@ def differential_co_expression_analysis(data):
     #degree
     degree = z_df.sum(axis = 1)
 
-    #degree senza zeri
+    #degree without zeros
     degree_zero = degree.to_frame()
     degree_zero.columns = ['degree']
     degree_zero = degree_zero[degree_zero.degree != 0]
@@ -159,18 +181,18 @@ def differential_co_expression_analysis(data):
 
 @app.route('/postdce', methods=['GET', 'POST'])
 def thisRoute():
-    information = request.data
-    information = information.decode("utf-8")
+    information = request.data #get data from the user interaction
+    information = information.decode("utf-8") #decode data
     if (information == '[]') :
         print('here')
         returni = 'empty'
         return returni
 
-    returni = differential_co_expression_analysis(information)
-    if returni == 'empty' : return "empty"
-    else : return str(returni)
+    returni = differential_co_expression_analysis(information) #use data as input for the main function
+    if returni == 'empty' : return "empty" #If empty data was passed let user know
+    else : return str(returni) #return results to client side
     
 
 if __name__ == "__main__" :
-    app.run(debug=True,host='127.0.0.1', port=5000)
+    app.run(debug=True,host='127.0.0.1', port=5000) #run app in local
 
